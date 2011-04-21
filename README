@@ -1,0 +1,14 @@
+
+This is the source code for the stk500v2 bootloader that runs on most any Microchip pic32 part. It currently has been tested on chips with at least 32k of RAM.
+
+The bootloader is compatible with v5.8 of avrdude.
+
+There is some modifications required in order to get the LED to blink for your particular part
+
+
+The current supported boards are the Digilent uno and mega pic32 boards.
+
+This project is set up for Microchips MPLAB-X compiler environment. It already has support for the uno and mega and the Microchip pic32 starter kit.
+
+this was written by Mark Sproul (msproul@skychariot.com) 2011
+
