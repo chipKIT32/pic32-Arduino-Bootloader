@@ -11,6 +11,13 @@ CND_ARTIFACT_PATH_uno=dist/uno/production/arduino-booloader.X.production.elf
 CND_PACKAGE_DIR_uno=${CND_DISTDIR}/uno/package
 CND_PACKAGE_NAME_uno=arduino-booloader.x.tar
 CND_PACKAGE_PATH_uno=${CND_DISTDIR}/uno/package/arduino-booloader.x.tar
+# uno-128k configuration
+CND_ARTIFACT_DIR_uno-128k=dist/uno-128k/production
+CND_ARTIFACT_NAME_uno-128k=arduino-booloader.X.production.elf
+CND_ARTIFACT_PATH_uno-128k=dist/uno-128k/production/arduino-booloader.X.production.elf
+CND_PACKAGE_DIR_uno-128k=${CND_DISTDIR}/uno-128k/package
+CND_PACKAGE_NAME_uno-128k=arduino-booloader.x.tar
+CND_PACKAGE_PATH_uno-128k=${CND_DISTDIR}/uno-128k/package/arduino-booloader.x.tar
 # mega configuration
 CND_ARTIFACT_DIR_mega=dist/mega/production
 CND_ARTIFACT_NAME_mega=arduino-booloader.X.production.elf

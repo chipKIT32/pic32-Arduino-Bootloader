@@ -36,18 +36,16 @@
 //*	Apr 14,	2011	<ML>S Updated config bits as per Gene
 //*	Apr 24,	2011	<MLS> Working on reducing memory size
 //*	Apr 24,	2011	<MLS> Added Version number, Version 1.0
-//*	Apr 24,	2011	<MLS> Added chip erase, only erases blocks that have non-0xff data
-//*	Apr 24,	2011	<MLS> Released version 1.0 to Digilent
 //************************************************************************
 
 #define	_VERSION_MAJOR_		1
 #define	_VERSION_MINOR_		0
 #define	_VERSION_STRING_	"V1.0"
 
-#define _USE_RELEASE_OPTIONS_
+//#define _USE_RELEASE_OPTIONS_
 
 //************************************************************************
-#if defined(__32MX320F064H__) || defined(__32MX320F128H__)
+#if defined(__32MX320F064H__)
 	#define	_BOARD_DIGILENT_UNO_
 	#define _USE_RELEASE_OPTIONS_
 
@@ -56,7 +54,7 @@
 #elif defined(__32MX795F512L__)
 	//*	mega board ready for release
 	#define	_BOARD_DIGILENT_MEGA_
-	#define _USE_RELEASE_OPTIONS_
+//	#define _USE_RELEASE_OPTIONS_
 
 //************************************************************************
 #elif defined(__32MX360F512L__)
@@ -73,7 +71,7 @@
 
 #ifdef _USE_RELEASE_OPTIONS_
 	#define	_ENABLE_MONITOR_
-//	#define	_ENABLE_PORT_LIST_
+	#define	_ENABLE_PORT_LIST_
 //	#define _ENABLE_PORT_BLINK_
 #else
 	#warning NOT-FOR-RELEASE-VERSION
@@ -687,6 +685,58 @@ unsigned int	returnCode;
 #endif
 }
 
+#if 0
+//*****************************************************************************
+static void boot_page_erase(long address)
+{
+unsigned char	*actualFlashAddress;
+unsigned char	*actualFlashAddressBlock;
+unsigned int	returnCode;
+int				ii;
+int				pageOffset;
+
+	actualFlashAddress	=	(unsigned char *)FLASH_PROG_BASE;
+	actualFlashAddress	+=	address;
+
+	actualFlashAddressBlock	=	(unsigned char	*)((long)actualFlashAddress & (long)0xfffffe0);
+	//*	now copy the 512 byte block into the page buffer
+	for (ii=0; ii<512; ii++)
+	{
+		gPageBuffer[ii]	=	actualFlashAddressBlock[ii];
+	}
+	//*	now we have to write back the page we did not want to erase
+	if (actualFlashAddress == actualFlashAddressBlock)
+	{
+		//*	we are writting the even page
+		pageOffset	=	0;
+	}
+	else
+	{
+		//*	we are writting the odd page
+		pageOffset	=	256;
+	}
+	for (ii=0; ii<256; ii++)
+	{
+		gPageBuffer[pageOffset + ii]	=	0xff;
+	}
+#ifdef DEBUG_VIA_SERIAL_AUX
+	Serial2_println();
+	Serial2_print("boot_page_erase");
+	Serial2_print("actualFlashAddress=");
+	Serial2_PrintLongWordHex((long)actualFlashAddress);
+	Serial2_println();
+	Serial2_print("actualFlashAddressBlock=");
+	Serial2_PrintLongWordHex((long)actualFlashAddressBlock);
+	Serial2_println();
+#endif
+	returnCode	=	NVMErasePage(actualFlashAddressBlock);
+	
+	returnCode	=	NVMProgram(	actualFlashAddress,				//	Destination address to start writing from.
+								(void *)gFlashDataBuffer,		//	Location of data to write.
+								512,							//	Number of bytes to write.
+								(void *)gPageBuffer);
+}
+#endif
 
 //*****************************************************************************
 static void boot_page_fill(long address, int data)
@@ -698,76 +748,6 @@ int				bufferOffset;
 	gFlashDataBuffer[bufferOffset]		=	data & 0x0ff;
 	gFlashDataBuffer[bufferOffset + 1]	=	(data >> 8) & 0x0ff;
 }
-
-#define	PIC32_PAGE_SIZE	4096
-#define	EEPROM_SIZE		4096
-//*****************************************************************************
-//*	Erase the entire chip
-//*	this looks at each 4096 byte block, if it is already all 0xff, then it is left alone,
-//*	if even one byte is non-0xff, then the entire block gets erasased
-//*****************************************************************************
-static void boot_chip_erase(void)
-{
-unsigned char	*actualFlashAddress;
-unsigned int	returnCode;
-int				ii;
-unsigned char	erasePage;
-
-#ifdef DEBUG_VIA_SERIAL_AUX
-long			erasedPageCnt;
-long			notErasedCnt;
-
-	erasedPageCnt		=	0;
-	notErasedCnt		=	0;
-
-	Serial2_println();
-	Serial2_print("boot_chip_erase");
-#endif
-
-	actualFlashAddress	=	(unsigned char *)FLASH_PROG_BASE;
-	while ((long)actualFlashAddress < (FLASH_PROG_BASE + FLASHEND - EEPROM_SIZE ))
-	{
-		//*	look through the page and make sure it needs to be erased
-		erasePage	=	false;
-		for (ii=0; ii<PIC32_PAGE_SIZE; ii++)
-		{
-			if (actualFlashAddress[ii] != 0x0ff)
-			{
-				erasePage	=	true;
-				break;
-			}
-		}
-		if (erasePage)
-		{
-			returnCode	=	NVMErasePage(actualFlashAddress);
-#ifdef DEBUG_VIA_SERIAL_AUX
-			erasedPageCnt++;
-#endif
-		}
-#ifdef DEBUG_VIA_SERIAL_AUX
-		else
-		{
-			notErasedCnt++;
-		}
-#endif
-	
-	
-		actualFlashAddress	+=	PIC32_PAGE_SIZE;
-	}
-#ifdef DEBUG_VIA_SERIAL_AUX
-	Serial2_println();
-	Serial2_print("erased page count=");
-	Serial2_PrintLongWordHex(erasedPageCnt);
-	Serial2_println();
-	Serial2_print("not erased page count=");
-	Serial2_PrintLongWordHex(notErasedCnt);
-	Serial2_println();
-	Serial2_print("total memory erased=");
-	Serial2_PrintLongWordHex(erasedPageCnt * PIC32_PAGE_SIZE);
-	Serial2_println();
-#endif
-}
-
 
 //*****************************************************************************
 static unsigned int	pgm_read_word_far(unsigned long argAddress)
@@ -810,7 +790,6 @@ unsigned int	data;
 unsigned int	size;
 unsigned char	highByte, lowByte;
 unsigned long	rcvCharCounter;
-unsigned char	chipNeedsToBeErased;
 
 #ifdef _ENABLE_MONITOR_
 	unsigned int	exPointCntr	=	0;
@@ -822,13 +801,12 @@ unsigned char	chipNeedsToBeErased;
 	int		jj;
 #endif
 
-	__PIC32_pbClk		=	SYSTEMConfigPerformance(F_CPU);
+	__PIC32_pbClk	=	SYSTEMConfigPerformance(F_CPU);
 
 
-	gFlashPtr			=	(unsigned char *)FLASH_PROG_BASE;
-	gEBASEptr			=	(char *)_CP0_GET_EBASE();
-	chipNeedsToBeErased	=	true;
-	
+	gFlashPtr		=	(unsigned char *)FLASH_PROG_BASE;
+	gEBASEptr		=	(char *)_CP0_GET_EBASE();
+
 	OpenCoreTimer(CORE_TICK_RATE);
 
 	BootLED_Init();
@@ -1362,12 +1340,14 @@ unsigned char	chipNeedsToBeErased;
 
 							if ( msgBuffer[0] == CMD_PROGRAM_FLASH_ISP )
 							{
-								if (chipNeedsToBeErased)
-								{
-									//*	this only gets executed ONCE
-									boot_chip_erase();
-									chipNeedsToBeErased	=	false;
-								}
+								// erase only main section (bootloader protection)
+	//+							if (eraseAddress < APP_END )
+	//+							{
+	//+								boot_page_erase(eraseAddress);		// Perform page erase
+	//+								boot_spm_busy_wait();				// Wait until the memory is erased.
+	//+								eraseAddress	+=	SPM_PAGESIZE;	// point to next page to be erased
+	//+							}
+	//--							boot_page_erase(address);			// Perform page erase
 
 							#ifdef DEBUG_VIA_SERIAL_AUX
 								asciiIdx		=	0;
@@ -1634,8 +1614,20 @@ unsigned char	chipNeedsToBeErased;
 unsigned char	*gRamPtr;
 unsigned long	gRamIndex;
 unsigned long	gFlashIndex;
+unsigned long	gEepromIndex;
 
 
+#if defined(__32MX795F512H__)
+	#define	_CPU_NAME_	"32MX795F512H"
+#elif defined(__32MX795F512L__)
+	#define	_CPU_NAME_	"32MX795F512L"
+#elif defined(__32MX320F064H__)
+	#define	_CPU_NAME_	"32MX320F064H"
+#elif defined(__32MX360F512L__)
+	#define	_CPU_NAME_	"32MX360F512L"
+#else
+	#error cpu not recongized
+#endif
 
 enum
 {
@@ -1670,6 +1662,9 @@ enum
 	prog_char	gTextMsg_HELP_MSG_0[]		PROGMEM	=	"0=Zero address ctrs";
 	prog_char	gTextMsg_HELP_MSG_QM[]		PROGMEM	=	"?=CPU stats";
 	prog_char	gTextMsg_HELP_MSG_B[]		PROGMEM	=	"B=Blink LED";
+#ifdef _ENABLE_EEPROM_DUMP_
+	prog_char	gTextMsg_HELP_MSG_E[]		PROGMEM	=	"E=Dump EEPROM";
+#endif
 	prog_char	gTextMsg_HELP_MSG_F[]		PROGMEM	=	"F=Dump FLASH";
 	prog_char	gTextMsg_HELP_MSG_H[]		PROGMEM	=	"H=Help";
 #ifdef _ENABLE_PORT_LIST_
@@ -2095,7 +2090,9 @@ static void PrintHelp(void)
 	PrintFromPROGMEMln(gTextMsg_HELP_MSG_0, 0);
 	PrintFromPROGMEMln(gTextMsg_HELP_MSG_QM, 0);
 	PrintFromPROGMEMln(gTextMsg_HELP_MSG_B, 0);
-
+#ifdef _ENABLE_EEPROM_DUMP_
+	PrintFromPROGMEMln(gTextMsg_HELP_MSG_E, 0);
+#endif
 	PrintFromPROGMEMln(gTextMsg_HELP_MSG_F, 0);
 	PrintFromPROGMEMln(gTextMsg_HELP_MSG_H, 0);
 
@@ -2130,6 +2127,7 @@ int				ii, jj;
 
 	gRamIndex			=	0;
 	gFlashIndex			=	0;
+	gEepromIndex		=	0;
 	gRamPtr			=	(unsigned char *)0x80000000;
 	gRamIndex		=	0;
 	gFlashPtr		=	(unsigned char *)FLASH_PROG_BASE;
@@ -2165,6 +2163,7 @@ int				ii, jj;
 				PrintFromPROGMEMln(gTextMsg_HELP_MSG_0, 2);
 				gFlashIndex		=	0;
 				gRamIndex		=	0;
+				gEepromIndex	=	0;
 				break;
 
 			case '?':
@@ -2176,6 +2175,18 @@ int				ii, jj;
 				PrintFromPROGMEMln(gTextMsg_HELP_MSG_B, 2);
 				BlinkLED();
 				break;
+
+		#ifdef _ENABLE_EEPROM_DUMP_
+			case 'E':
+				PrintFromPROGMEMln(gTextMsg_HELP_MSG_E, 2);
+				DumpHex(kDUMP_EEPROM, gEepromIndex, 16);
+				gEepromIndex	+=	256;
+		//		if (gEepromIndex > E2END)
+		//		{
+		//			gEepromIndex	=	0;
+		//		}
+				break;
+		#endif
 		
 			case 'F':
 				PrintFromPROGMEMln(gTextMsg_HELP_MSG_F, 2);

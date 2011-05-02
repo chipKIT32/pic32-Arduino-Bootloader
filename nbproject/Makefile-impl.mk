@@ -31,7 +31,7 @@ DEFAULTCONF=uno
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=uno mega pic32-starter-kit pic32-Ethernet-starter-kit pic32-USB-starter-kit 
+ALLCONFS=uno uno-128k mega pic32-starter-kit pic32-Ethernet-starter-kit pic32-USB-starter-kit 
 
 
 # build

@@ -8,14 +8,14 @@ Archive member included because of file (symbol)
                               build/uno/production/pic32bootloader.o (INTDisableInterrupts)
 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
                               build/uno/production/pic32bootloader.o (INTRestoreInterrupts)
+/Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+                              build/uno/production/pic32bootloader.o (NVMErasePage)
+/Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+                              /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o) (_NVMOperation)
 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
                               build/uno/production/pic32bootloader.o (NVMProgram)
 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
                               /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o) (NVMWriteRow)
-/Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
-                              /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o) (NVMErasePage)
-/Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
-                              /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o) (_NVMOperation)
 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
                               /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o) (memcpy)
 
@@ -30,9 +30,9 @@ kseg0 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
 .startup                0x9fc00490           0xbc         188  C startup code 
-.text                   0x9fc0054c         0x17a4        6052  Application's executable code 
-.rodata                 0x9fc01cf0          0x204         516  Read-only constant data 
-         Total kseg0_boot_mem used  :      0x1a64        6756  96.2% of 0x1b70
+.text                   0x9fc0054c         0x16a0        5792  Application's executable code 
+.rodata                 0x9fc01bec          0x1d8         472  Read-only constant data 
+         Total kseg0_boot_mem used  :      0x1934        6452  91.9% of 0x1b70
 
 Exception-Memory Usage 
 section                    address  length [bytes]      (dec)  Description
@@ -45,19 +45,19 @@ section                    address  length [bytes]      (dec)  Description
 .reset                  0xbfc00000           0x10          16  Reset handler 
          Total kseg1_boot_mem used  :        0x10          16  1.4% of 0x490
         --------------------------------------------------------------------------
-         Total Program Memory used  :      0x1a74        6772  82.7% of 0x2000
+         Total Program Memory used  :      0x1944        6468  79.0% of 0x2000
         --------------------------------------------------------------------------
 
 
 kseg1 Data-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.sbss                   0xa0000004           0x1c          28  Small uninitialized data 
-.bss                    0xa0000020          0x600        1536  Uninitialized data 
+.sbss                   0xa0000004           0x18          24  Small uninitialized data 
+.bss                    0xa000001c          0x600        1536  Uninitialized data 
 .stack                  0xa0000620          0x400        1024  Minimum space reserved for stack 
-         Total kseg1_data_mem used  :       0xa1c        2588  7.9% of 0x7ffc
+         Total kseg1_data_mem used  :       0xa18        2584  7.9% of 0x7ffc
         --------------------------------------------------------------------------
-            Total Data Memory used  :       0xa1c        2588  7.9% of 0x7ffc
+            Total Data Memory used  :       0xa18        2584  7.9% of 0x7ffc
         --------------------------------------------------------------------------
 
 Discarded input sections
@@ -70,13 +70,9 @@ Discarded input sections
  .data          0x0000000000000000        0x0 build/uno/production/pic32bootloader.o
  .bss           0x0000000000000000        0x0 build/uno/production/pic32bootloader.o
  .reginfo       0x0000000000000000       0x18 build/uno/production/pic32bootloader.o
- .pdr           0x0000000000000000      0x300 build/uno/production/pic32bootloader.o
+ .pdr           0x0000000000000000      0x2c0 build/uno/production/pic32bootloader.o
  .text.delay_ms
                 0x0000000000000000       0x48 build/uno/production/pic32bootloader.o
- .text.DebugTimeOut
-                0x0000000000000000       0x8c build/uno/production/pic32bootloader.o
- .text.PrintDecInt
-                0x0000000000000000       0xe0 build/uno/production/pic32bootloader.o
  .text          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
  .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
  .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
@@ -104,16 +100,6 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
  .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
  .pdr           0x0000000000000000       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .text          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .pdr           0x0000000000000000       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .text          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .pdr           0x0000000000000000       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
  .text          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
  .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
  .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
@@ -124,6 +110,16 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
  .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
  .pdr           0x0000000000000000       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .text          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .pdr           0x0000000000000000       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .text          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+ .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+ .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+ .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+ .pdr           0x0000000000000000       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
  .data          0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
  .bss           0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
  .reginfo       0x0000000000000000       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -215,153 +211,150 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  *(.startup)
  .startup       0x000000009fc00490       0xbc build/uno/production/startup.o
 
-.text           0x000000009fc0054c     0x17a4
+.text           0x000000009fc0054c     0x16a0
                 0x000000009fc0054c                _text_begin = .
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text          0x000000009fc0054c       0x10 build/uno/production/startup.o
                 0x000000009fc00554                __crt0_exit
- .text.Serial_print
-                0x000000009fc0055c       0x40 build/uno/production/pic32bootloader.o
- .text.Serial_println
-                0x000000009fc0059c       0x40 build/uno/production/pic32bootloader.o
- .text.JumpToApp
-                0x000000009fc005dc       0x34 build/uno/production/pic32bootloader.o
  .text.Serial_read_timeout
-                0x000000009fc00610       0xa0 build/uno/production/pic32bootloader.o
+                0x000000009fc0055c       0xa0 build/uno/production/pic32bootloader.o
+ .text.Serial_print
+                0x000000009fc005fc       0x40 build/uno/production/pic32bootloader.o
+ .text.Serial_println
+                0x000000009fc0063c       0x20 build/uno/production/pic32bootloader.o
+ .text.JumpToApp
+                0x000000009fc0065c       0x34 build/uno/production/pic32bootloader.o
  .text.delay_microSeconds
-                0x000000009fc006b0       0x50 build/uno/production/pic32bootloader.o
+                0x000000009fc00690       0x50 build/uno/production/pic32bootloader.o
  .text.InitFlashBuffer
-                0x000000009fc00700       0x2c build/uno/production/pic32bootloader.o
+                0x000000009fc006e0       0x2c build/uno/production/pic32bootloader.o
  .text.boot_page_write
-                0x000000009fc0072c       0x34 build/uno/production/pic32bootloader.o
+                0x000000009fc0070c       0x34 build/uno/production/pic32bootloader.o
  .text.boot_page_fill
-                0x000000009fc00760       0x34 build/uno/production/pic32bootloader.o
+                0x000000009fc00740       0x34 build/uno/production/pic32bootloader.o
+ .text.boot_chip_erase
+                0x000000009fc00774       0x78 build/uno/production/pic32bootloader.o
  .text.pgm_read_word_far
-                0x000000009fc00794       0x1c build/uno/production/pic32bootloader.o
- .text.main     0x000000009fc007b0      0x8a8 build/uno/production/pic32bootloader.o
-                0x000000009fc007b0                main
+                0x000000009fc007ec       0x1c build/uno/production/pic32bootloader.o
+ .text.main     0x000000009fc00808      0x8d4 build/uno/production/pic32bootloader.o
+                0x000000009fc00808                main
  .text.PrintFromPROGMEM
-                0x000000009fc01058       0x48 build/uno/production/pic32bootloader.o
+                0x000000009fc010dc       0x20 build/uno/production/pic32bootloader.o
  .text.PrintFromPROGMEMln
-                0x000000009fc010a0       0x24 build/uno/production/pic32bootloader.o
+                0x000000009fc010fc       0x24 build/uno/production/pic32bootloader.o
+ .text.PrintHexNyble
+                0x000000009fc01120       0x38 build/uno/production/pic32bootloader.o
  .text.PrintHexByte
-                0x000000009fc010c4       0x84 build/uno/production/pic32bootloader.o
+                0x000000009fc01158       0x30 build/uno/production/pic32bootloader.o
  .text.PrintHexLong
-                0x000000009fc01148       0x40 build/uno/production/pic32bootloader.o
+                0x000000009fc01188       0x40 build/uno/production/pic32bootloader.o
  .text.PrintCPUstats
-                0x000000009fc01188       0xa8 build/uno/production/pic32bootloader.o
+                0x000000009fc011c8       0xa8 build/uno/production/pic32bootloader.o
  .text.BlinkLED
-                0x000000009fc01230       0x80 build/uno/production/pic32bootloader.o
- .text.DumpHex  0x000000009fc012b0      0x204 build/uno/production/pic32bootloader.o
- .text.PrintAvailablePort
-                0x000000009fc014b4       0x78 build/uno/production/pic32bootloader.o
- .text.ListAvailablePorts
-                0x000000009fc0152c       0x8c build/uno/production/pic32bootloader.o
+                0x000000009fc01270       0x80 build/uno/production/pic32bootloader.o
+ .text.DumpHex  0x000000009fc012f0      0x204 build/uno/production/pic32bootloader.o
  .text.PrintHelp
-                0x000000009fc015b8       0x94 build/uno/production/pic32bootloader.o
+                0x000000009fc014f4       0x84 build/uno/production/pic32bootloader.o
  .text.RunMonitor
-                0x000000009fc0164c      0x2c4 build/uno/production/pic32bootloader.o
+                0x000000009fc01578      0x294 build/uno/production/pic32bootloader.o
  .text.OpenCoreTimer
-                0x000000009fc01910        0xc /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral.a(open_core_timer_lib.o)
-                0x000000009fc01910                OpenCoreTimer
+                0x000000009fc0180c        0xc /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral.a(open_core_timer_lib.o)
+                0x000000009fc0180c                OpenCoreTimer
  .text.CheKseg0CacheOn
-                0x000000009fc0191c       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
-                0x000000009fc0191c                CheKseg0CacheOn
+                0x000000009fc01818       0x18 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
+                0x000000009fc01818                CheKseg0CacheOn
  .text.INTDisableInterrupts
-                0x000000009fc01934        0x8 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
-                0x000000009fc01934                INTDisableInterrupts
+                0x000000009fc01830        0x8 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
+                0x000000009fc01830                INTDisableInterrupts
  .text.INTRestoreInterrupts
-                0x000000009fc0193c       0x1c /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
-                0x000000009fc0193c                INTRestoreInterrupts
- .text.NVMProgram
-                0x000000009fc01958      0x12c /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
-                0x000000009fc01958                NVMProgram
- .text.NVMWriteRow
-                0x000000009fc01a84       0x40 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
-                0x000000009fc01a84                NVMWriteRow
+                0x000000009fc01838       0x1c /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
+                0x000000009fc01838                INTRestoreInterrupts
  .text.NVMErasePage
-                0x000000009fc01ac4       0x34 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
-                0x000000009fc01ac4                NVMErasePage
+                0x000000009fc01854       0x34 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+                0x000000009fc01854                NVMErasePage
  .text._NVMOperation
-                0x000000009fc01af8       0x90 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
-                0x000000009fc01af8                _NVMOperation
- .text          0x000000009fc01b88      0x168 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                0x000000009fc01b88                memcpy
+                0x000000009fc01888       0x90 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+                0x000000009fc01888                _NVMOperation
+ .text.NVMProgram
+                0x000000009fc01918      0x12c /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+                0x000000009fc01918                NVMProgram
+ .text.NVMWriteRow
+                0x000000009fc01a44       0x40 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+                0x000000009fc01a44                NVMWriteRow
+ .text          0x000000009fc01a84      0x168 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
+                0x000000009fc01a84                memcpy
  *(.text.*personality*)
  *(.gnu.warning)
  *(.mips16.fn.*)
  *(.mips16.call.*)
-                0x000000009fc01cf0                _text_end = .
+                0x000000009fc01bec                _text_end = .
 
-.rodata         0x000000009fc01cf0      0x204
+.rodata         0x000000009fc01bec      0x1d8
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.str1.4
-                0x000000009fc01cf0       0x24 build/uno/production/pic32bootloader.o
- .rodata        0x000000009fc01d14       0x90 build/uno/production/pic32bootloader.o
+                0x000000009fc01bec        0x8 build/uno/production/pic32bootloader.o
+ .rodata        0x000000009fc01bf4       0x90 build/uno/production/pic32bootloader.o
  .rodata.gTextMsg_CPU_Name
-                0x000000009fc01da4       0x10 build/uno/production/pic32bootloader.o
-                0x000000009fc01da4                gTextMsg_CPU_Name
+                0x000000009fc01c84       0x10 build/uno/production/pic32bootloader.o
+                0x000000009fc01c84                gTextMsg_CPU_Name
  .rodata.gTextMsg_Explorer
-                0x000000009fc01db4       0x1c build/uno/production/pic32bootloader.o
-                0x000000009fc01db4                gTextMsg_Explorer
+                0x000000009fc01c94       0x20 build/uno/production/pic32bootloader.o
+                0x000000009fc01c94                gTextMsg_Explorer
  .rodata.gTextMsg_Prompt
-                0x000000009fc01dd0        0xc build/uno/production/pic32bootloader.o
-                0x000000009fc01dd0                gTextMsg_Prompt
+                0x000000009fc01cb4        0xc build/uno/production/pic32bootloader.o
+                0x000000009fc01cb4                gTextMsg_Prompt
  .rodata.gTextMsg_HUH
-                0x000000009fc01ddc        0x8 build/uno/production/pic32bootloader.o
-                0x000000009fc01ddc                gTextMsg_HUH
+                0x000000009fc01cc0        0x8 build/uno/production/pic32bootloader.o
+                0x000000009fc01cc0                gTextMsg_HUH
  .rodata.gTextMsg_COMPILED_ON
-                0x000000009fc01de4       0x10 build/uno/production/pic32bootloader.o
-                0x000000009fc01de4                gTextMsg_COMPILED_ON
+                0x000000009fc01cc8       0x10 build/uno/production/pic32bootloader.o
+                0x000000009fc01cc8                gTextMsg_COMPILED_ON
  .rodata.gTextMsg_GCC_DATE_STR
-                0x000000009fc01df4        0xc build/uno/production/pic32bootloader.o
-                0x000000009fc01df4                gTextMsg_GCC_DATE_STR
+                0x000000009fc01cd8        0xc build/uno/production/pic32bootloader.o
+                0x000000009fc01cd8                gTextMsg_GCC_DATE_STR
  .rodata.gTextMsg_CPU_Type
-                0x000000009fc01e00       0x10 build/uno/production/pic32bootloader.o
-                0x000000009fc01e00                gTextMsg_CPU_Type
+                0x000000009fc01ce4       0x10 build/uno/production/pic32bootloader.o
+                0x000000009fc01ce4                gTextMsg_CPU_Type
  .rodata.gTextMsg_DEVID
-                0x000000009fc01e10       0x10 build/uno/production/pic32bootloader.o
-                0x000000009fc01e10                gTextMsg_DEVID
+                0x000000009fc01cf4       0x10 build/uno/production/pic32bootloader.o
+                0x000000009fc01cf4                gTextMsg_DEVID
  .rodata.gTextMsg_GCC_VERSION
-                0x000000009fc01e20       0x10 build/uno/production/pic32bootloader.o
-                0x000000009fc01e20                gTextMsg_GCC_VERSION
+                0x000000009fc01d04       0x10 build/uno/production/pic32bootloader.o
+                0x000000009fc01d04                gTextMsg_GCC_VERSION
  .rodata.gTextMsg_GCC_VERSION_STR
-                0x000000009fc01e30       0x44 build/uno/production/pic32bootloader.o
-                0x000000009fc01e30                gTextMsg_GCC_VERSION_STR
+                0x000000009fc01d14       0x44 build/uno/production/pic32bootloader.o
+                0x000000009fc01d14                gTextMsg_GCC_VERSION_STR
  .rodata.gTextMsg_HELP_MSG_0
-                0x000000009fc01e74       0x14 build/uno/production/pic32bootloader.o
-                0x000000009fc01e74                gTextMsg_HELP_MSG_0
+                0x000000009fc01d58       0x14 build/uno/production/pic32bootloader.o
+                0x000000009fc01d58                gTextMsg_HELP_MSG_0
  .rodata.gTextMsg_HELP_MSG_QM
-                0x000000009fc01e88        0xc build/uno/production/pic32bootloader.o
-                0x000000009fc01e88                gTextMsg_HELP_MSG_QM
+                0x000000009fc01d6c        0xc build/uno/production/pic32bootloader.o
+                0x000000009fc01d6c                gTextMsg_HELP_MSG_QM
  .rodata.gTextMsg_HELP_MSG_B
-                0x000000009fc01e94        0xc build/uno/production/pic32bootloader.o
-                0x000000009fc01e94                gTextMsg_HELP_MSG_B
+                0x000000009fc01d78        0xc build/uno/production/pic32bootloader.o
+                0x000000009fc01d78                gTextMsg_HELP_MSG_B
  .rodata.gTextMsg_HELP_MSG_F
-                0x000000009fc01ea0       0x10 build/uno/production/pic32bootloader.o
-                0x000000009fc01ea0                gTextMsg_HELP_MSG_F
+                0x000000009fc01d84       0x10 build/uno/production/pic32bootloader.o
+                0x000000009fc01d84                gTextMsg_HELP_MSG_F
  .rodata.gTextMsg_HELP_MSG_H
-                0x000000009fc01eb0        0x8 build/uno/production/pic32bootloader.o
-                0x000000009fc01eb0                gTextMsg_HELP_MSG_H
- .rodata.gTextMsg_HELP_MSG_L
-                0x000000009fc01eb8       0x14 build/uno/production/pic32bootloader.o
-                0x000000009fc01eb8                gTextMsg_HELP_MSG_L
+                0x000000009fc01d94        0x8 build/uno/production/pic32bootloader.o
+                0x000000009fc01d94                gTextMsg_HELP_MSG_H
  .rodata.gTextMsg_HELP_MSG_Q
-                0x000000009fc01ecc       0x1c build/uno/production/pic32bootloader.o
-                0x000000009fc01ecc                gTextMsg_HELP_MSG_Q
+                0x000000009fc01d9c       0x1c build/uno/production/pic32bootloader.o
+                0x000000009fc01d9c                gTextMsg_HELP_MSG_Q
  .rodata.gTextMsg_HELP_MSG_R
-                0x000000009fc01ee8        0xc build/uno/production/pic32bootloader.o
-                0x000000009fc01ee8                gTextMsg_HELP_MSG_R
+                0x000000009fc01db8        0xc build/uno/production/pic32bootloader.o
+                0x000000009fc01db8                gTextMsg_HELP_MSG_R
  *(.rodata1)
-                0x000000009fc01ef4                . = ALIGN (0x4)
+                0x000000009fc01dc4                . = ALIGN (0x4)
 
-.sdata2         0x000000009fc01ef4        0x0
+.sdata2         0x000000009fc01dc4        0x0
  *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
-                0x000000009fc01ef4                . = ALIGN (0x4)
+                0x000000009fc01dc4                . = ALIGN (0x4)
 
-.sbss2          0x000000009fc01ef4        0x0
+.sbss2          0x000000009fc01dc4        0x0
  *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
-                0x000000009fc01ef4                . = ALIGN (0x4)
+                0x000000009fc01dc4                . = ALIGN (0x4)
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -372,12 +365,12 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
 .dbg_data       0x00000000a0000004        0x0
                 0x00000000a0000004                . = (. + DEFINED (_DEBUGGER)?0x200:0x0)
 
-.data           0x00000000a0000004        0x0 load address 0x000000009fc01ef4
+.data           0x00000000a0000004        0x0 load address 0x000000009fc01dc4
                 0x00000000a0000004                _data_begin = .
  *(.data .data.* .gnu.linkonce.d.*)
  *(.gnu.linkonce.d.*personality*)
  *(.data1)
-                0x000000009fc01ef4                _data_image_begin = LOADADDR (.data)
+                0x000000009fc01dc4                _data_image_begin = LOADADDR (.data)
 
 .eh_frame
  *(.eh_frame)
@@ -388,7 +381,7 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  *(.got.plt)
  *(.got)
 
-.sdata          0x00000000a0000004        0x0 load address 0x000000009fc01ef4
+.sdata          0x00000000a0000004        0x0 load address 0x000000009fc01dc4
                 0x00000000a0000004                _sdata_begin = .
  *(.sdata .sdata.* .gnu.linkonce.s.*)
                 0x00000000a0000004                _sdata_end = .
@@ -402,7 +395,7 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
                 0x00000000a0000004                _data_end = .
                 0x00000000a0000004                _bss_begin = .
 
-.sbss           0x00000000a0000004       0x1c load address 0x000000009fc01ef4
+.sbss           0x00000000a0000004       0x18 load address 0x000000009fc01dc4
                 0x00000000a0000004                _sbss_begin = .
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
@@ -423,45 +416,42 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .sbss.gFlashIndex
                 0x00000000a0000018        0x4 build/uno/production/pic32bootloader.o
                 0x00000000a0000018                gFlashIndex
- .sbss.gEepromIndex
-                0x00000000a000001c        0x4 build/uno/production/pic32bootloader.o
-                0x00000000a000001c                gEepromIndex
  *(.scommon)
-                0x00000000a0000020                _sbss_end = .
+                0x00000000a000001c                _sbss_end = .
 
-.bss            0x00000000a0000020      0x600 load address 0x000000009fc01ef4
+.bss            0x00000000a000001c      0x600 load address 0x000000009fc01dc4
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss.gFlashDataBuffer
-                0x00000000a0000020      0x200 build/uno/production/pic32bootloader.o
-                0x00000000a0000020                gFlashDataBuffer
+                0x00000000a000001c      0x200 build/uno/production/pic32bootloader.o
+                0x00000000a000001c                gFlashDataBuffer
  .bss.gPageBuffer
-                0x00000000a0000220      0x400 build/uno/production/pic32bootloader.o
-                0x00000000a0000220                gPageBuffer
+                0x00000000a000021c      0x400 build/uno/production/pic32bootloader.o
+                0x00000000a000021c                gPageBuffer
  *(COMMON)
-                0x00000000a0000620                . = ALIGN (0x4)
-                0x00000000a0000620                . = ALIGN (0x4)
-                0x00000000a0000620                _end = .
-                0x00000000a0000620                _bss_end = .
+                0x00000000a000061c                . = ALIGN (0x4)
+                0x00000000a000061c                . = ALIGN (0x4)
+                0x00000000a000061c                _end = .
+                0x00000000a000061c                _bss_end = .
 
-.heap           0x00000000a0000620        0x0 load address 0x000000009fc01ef4
+.heap           0x00000000a0000620        0x0 load address 0x000000009fc01dc4
                 0x00000000a0000620                _heap = .
                 0x00000000a0000620                . = (. + _min_heap_size)
                 0x00000000a0000620                . = ALIGN (0x8)
 
-.stack          0x00000000a0000620      0x400 load address 0x000000009fc01ef4
+.stack          0x00000000a0000620      0x400 load address 0x000000009fc01dc4
                 0x00000000a0000620                _splim = .
                 0x00000000a0000620                _SPLIM = .
                 0x00000000a0000a20                . = (. + _min_stack_size)
  *fill*         0x00000000a0000620      0x400 00
                 0x00000000a0000a20                . = ALIGN (0x8)
 
-.ramfunc        0x00000000a0001000        0x0 load address 0x000000009fc01ef4
+.ramfunc        0x00000000a0001000        0x0 load address 0x000000009fc01dc4
                 0x00000000a0001000                _ramfunc_begin = .
  *(.ramfunc .ramfunc.*)
                 0x00000000a0001000                . = ALIGN (0x4)
                 0x00000000a0001000                _ramfunc_end = .
-                0x000000009fc01ef4                _ramfunc_image_begin = LOADADDR (.ramfunc)
+                0x000000009fc01dc4                _ramfunc_image_begin = LOADADDR (.ramfunc)
                 0x0000000000000000                _ramfunc_length = SIZEOF (.ramfunc)
                 0x0000000000000ffc                _bmxdkpba_address = (_ramfunc_begin - 0xa0000004)
                 0x0000000000007ffc                _bmxdudba_address = 0x7ffc
@@ -493,10 +483,10 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
  .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
  .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
  .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
  .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .mdebug.abi32  0x0000000000000000        0x0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .comment        0x0000000000000000      0x2d0
  *(.comment)
@@ -505,10 +495,10 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .comment       0x00000000000000a0       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
  .comment       0x00000000000000f0       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
  .comment       0x0000000000000140       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .comment       0x0000000000000190       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .comment       0x00000000000001e0       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .comment       0x0000000000000230       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
- .comment       0x0000000000000280       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .comment       0x0000000000000190       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+ .comment       0x00000000000001e0       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .comment       0x0000000000000230       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .comment       0x0000000000000280       0x50 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug
  *(.debug)
@@ -533,13 +523,13 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .debug_aranges
                 0x0000000000000080       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
  .debug_aranges
-                0x00000000000000a8       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+                0x00000000000000a8       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
  .debug_aranges
-                0x00000000000000d0       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+                0x00000000000000d0       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
  .debug_aranges
-                0x00000000000000f8       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+                0x00000000000000f8       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
  .debug_aranges
-                0x0000000000000120       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+                0x0000000000000120       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug_pubnames
                 0x0000000000000000      0x13f
@@ -553,13 +543,13 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .debug_pubnames
                 0x000000000000008a       0x2b /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
  .debug_pubnames
-                0x00000000000000b5       0x21 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+                0x00000000000000b5       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
  .debug_pubnames
-                0x00000000000000d6       0x22 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+                0x00000000000000d8       0x24 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
  .debug_pubnames
-                0x00000000000000f8       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+                0x00000000000000fc       0x21 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
  .debug_pubnames
-                0x000000000000011b       0x24 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+                0x000000000000011d       0x22 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug_info     0x0000000000000000      0x192
  *(.debug_info .gnu.linkonce.wi.*)
@@ -567,10 +557,10 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .debug_info    0x0000000000000030       0x42 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
  .debug_info    0x0000000000000072       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
  .debug_info    0x00000000000000a2       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .debug_info    0x00000000000000d2       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .debug_info    0x0000000000000102       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .debug_info    0x0000000000000132       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
- .debug_info    0x0000000000000162       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_info    0x00000000000000d2       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+ .debug_info    0x0000000000000102       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_info    0x0000000000000132       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .debug_info    0x0000000000000162       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug_abbrev   0x0000000000000000      0x118
  *(.debug_abbrev)
@@ -578,10 +568,10 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .debug_abbrev  0x0000000000000023       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
  .debug_abbrev  0x0000000000000046       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
  .debug_abbrev  0x0000000000000069       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .debug_abbrev  0x000000000000008c       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .debug_abbrev  0x00000000000000af       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .debug_abbrev  0x00000000000000d2       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
- .debug_abbrev  0x00000000000000f5       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_abbrev  0x000000000000008c       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+ .debug_abbrev  0x00000000000000af       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_abbrev  0x00000000000000d2       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .debug_abbrev  0x00000000000000f5       0x23 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug_line     0x0000000000000000      0x4c5
  *(.debug_line)
@@ -589,10 +579,10 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .debug_line    0x000000000000009b       0x8f /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
  .debug_line    0x000000000000012a       0xa0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
  .debug_line    0x00000000000001ca       0xa0 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .debug_line    0x000000000000026a       0x95 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .debug_line    0x00000000000002ff       0x97 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .debug_line    0x0000000000000396       0x98 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
- .debug_line    0x000000000000042e       0x97 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_line    0x000000000000026a       0x98 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+ .debug_line    0x0000000000000302       0x97 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_line    0x0000000000000399       0x95 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .debug_line    0x000000000000042e       0x97 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug_frame    0x0000000000000000      0x14c
  *(.debug_frame)
@@ -600,10 +590,10 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
  .debug_frame   0x0000000000000020       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(pcache.o)
  .debug_frame   0x0000000000000050       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_disable_interrupts_lib.o)
  .debug_frame   0x0000000000000070       0x20 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
- .debug_frame   0x0000000000000090       0x3c /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
- .debug_frame   0x00000000000000cc       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
- .debug_frame   0x00000000000000f4       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
- .debug_frame   0x000000000000011c       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_frame   0x0000000000000090       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+ .debug_frame   0x00000000000000b8       0x30 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+ .debug_frame   0x00000000000000e8       0x3c /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .debug_frame   0x0000000000000124       0x28 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
 
 .debug_str      0x0000000000000000      0x49a
  *(.debug_str)
@@ -614,14 +604,14 @@ LOAD /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../
                                          0xdf (size before relaxing)
  .debug_str     0x00000000000001f8       0x95 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(int_restore_interrupts_lib.o)
                                          0xdf (size before relaxing)
- .debug_str     0x000000000000028d       0x80 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+ .debug_str     0x000000000000028d       0x85 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
+                                         0xcf (size before relaxing)
+ .debug_str     0x0000000000000312       0x85 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
+                                         0xcf (size before relaxing)
+ .debug_str     0x0000000000000397       0x80 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
                                          0xca (size before relaxing)
- .debug_str     0x000000000000030d       0x83 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+ .debug_str     0x0000000000000417       0x83 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
                                          0xcd (size before relaxing)
- .debug_str     0x0000000000000390       0x85 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
-                                         0xcf (size before relaxing)
- .debug_str     0x0000000000000415       0x85 /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
-                                         0xcf (size before relaxing)
 
 .debug_loc
  *(.debug_loc)
@@ -1802,8 +1792,8 @@ LATGSET                                           /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 NVMADDR                                           /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+                                                  /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
                                                   build/uno/production/startup.o
 NVMADDRCLR                                        /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -1834,6 +1824,7 @@ NVMDATA                                           /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 NVMErasePage                                      /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_program_lib.o)
+                                                  build/uno/production/pic32bootloader.o
 NVMKEY                                            /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
@@ -2219,7 +2210,6 @@ PORTAINV                                          /Applications/microchip/mplabc
 PORTASET                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
 PORTB                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  build/uno/production/pic32bootloader.o
                                                   build/uno/production/startup.o
 PORTBCLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2232,7 +2222,6 @@ PORTBSET                                          /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 PORTC                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  build/uno/production/pic32bootloader.o
                                                   build/uno/production/startup.o
 PORTCCLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2245,7 +2234,6 @@ PORTCSET                                          /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 PORTD                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  build/uno/production/pic32bootloader.o
                                                   build/uno/production/startup.o
 PORTDCLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2258,7 +2246,6 @@ PORTDSET                                          /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 PORTE                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  build/uno/production/pic32bootloader.o
                                                   build/uno/production/startup.o
 PORTECLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2271,7 +2258,6 @@ PORTESET                                          /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 PORTF                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  build/uno/production/pic32bootloader.o
                                                   build/uno/production/startup.o
 PORTFCLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2284,7 +2270,6 @@ PORTFSET                                          /Applications/microchip/mplabc
                                                   build/uno/production/startup.o
 PORTG                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
-                                                  build/uno/production/pic32bootloader.o
                                                   build/uno/production/startup.o
 PORTGCLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/./proc/32MX320F064H/processor.o
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2862,8 +2847,8 @@ _APPOINV                                          /Applications/microchip/mplabc
 _APPOSET                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
 _DDPSTAT                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
 _NVMOperation                                     /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_operation_lib.o)
-                                                  /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
                                                   /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_write_row_lib.o)
+                                                  /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libmchp_peripheral_32MX320F064H.a(nvm_erase_page_lib.o)
 _STRO                                             /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
 _STROCLR                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
 _STROINV                                          /Applications/microchip/mplabc32/v1.11a/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/libc.a(memcpy.o)
@@ -2875,7 +2860,6 @@ _gp                                               build/uno/production/startup.o
 _reset                                            build/uno/production/startup.o
 _vector_spacing                                   build/uno/production/startup.o
 gEBASEptr                                         build/uno/production/pic32bootloader.o
-gEepromIndex                                      build/uno/production/pic32bootloader.o
 gFlashDataBuffer                                  build/uno/production/pic32bootloader.o
 gFlashIndex                                       build/uno/production/pic32bootloader.o
 gFlashPtr                                         build/uno/production/pic32bootloader.o
@@ -2894,7 +2878,6 @@ gTextMsg_HELP_MSG_0                               build/uno/production/pic32boot
 gTextMsg_HELP_MSG_B                               build/uno/production/pic32bootloader.o
 gTextMsg_HELP_MSG_F                               build/uno/production/pic32bootloader.o
 gTextMsg_HELP_MSG_H                               build/uno/production/pic32bootloader.o
-gTextMsg_HELP_MSG_L                               build/uno/production/pic32bootloader.o
 gTextMsg_HELP_MSG_Q                               build/uno/production/pic32bootloader.o
 gTextMsg_HELP_MSG_QM                              build/uno/production/pic32bootloader.o
 gTextMsg_HELP_MSG_R                               build/uno/production/pic32bootloader.o
