@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_CONF=pic32-USB-starter-kit
+CND_CONF=Digilent-Cerebot-32MX4
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging

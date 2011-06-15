@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_CONF=uno
+CND_CONF=microchip-pic32-starter-kit
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging

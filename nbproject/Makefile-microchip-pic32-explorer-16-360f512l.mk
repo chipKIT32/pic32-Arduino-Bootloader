@@ -15,7 +15,7 @@ MKDIR=mkdir -p
 RM=rm -f 
 CP=cp 
 # Macros
-CND_CONF=pic32-USB-starter-kit
+CND_CONF=microchip-pic32-explorer-16-360f512l
 
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
@@ -57,7 +57,7 @@ MP_AR_DIR=/Applications/microchip/mplabc32/v1.11a/bin
 ifneq ($(OS_CURRENT),$(OS_ORIGINAL))
 	@echo "***** WARNING: This make file contains OS dependent code. The OS this makefile is being run is different from the OS it was created in."
 endif
-	${MAKE}  -f nbproject/Makefile-pic32-USB-starter-kit.mk dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf
+	${MAKE}  -f nbproject/Makefile-microchip-pic32-explorer-16-360f512l.mk dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
@@ -79,7 +79,7 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 ${OBJECTDIR}/pic32bootloader.o: pic32bootloader.c  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} ${OBJECTDIR} 
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
-	${MP_CC} -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -x c -c -mprocessor=32MX360F512L -ffunction-sections -fdata-sections -mips16 -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
+	${MP_CC} -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -x c -c -mprocessor=32MX360F512L -ffunction-sections -fdata-sections -mips16 -D_BOARD_PIC32_EXPLORER16_ -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
 ifneq (,$(findstring MINGW32,$(OS_CURRENT))) 
 	 sed -e 's/\\$$/__EOL__/g' -e 's/\\ /__ESCAPED_SPACES__/g' -e 's/\\/\//g' -e 's/__ESCAPED_SPACES__/\\ /g' -e 's/__EOL__$$/\\/g' ${OBJECTDIR}/pic32bootloader.o.d > ${OBJECTDIR}/pic32bootloader.o.tmp
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
@@ -90,7 +90,7 @@ else
 ${OBJECTDIR}/pic32bootloader.o: pic32bootloader.c  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} ${OBJECTDIR} 
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
-	${MP_CC}  -x c -c -mprocessor=32MX360F512L -ffunction-sections -fdata-sections -mips16 -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
+	${MP_CC}  -x c -c -mprocessor=32MX360F512L -ffunction-sections -fdata-sections -mips16 -D_BOARD_PIC32_EXPLORER16_ -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
 ifneq (,$(findstring MINGW32,$(OS_CURRENT))) 
 	 sed -e 's/\\$$/__EOL__/g' -e 's/\\ /__ESCAPED_SPACES__/g' -e 's/\\/\//g' -e 's/__ESCAPED_SPACES__/\\ /g' -e 's/__EOL__$$/\\/g' ${OBJECTDIR}/pic32bootloader.o.d > ${OBJECTDIR}/pic32bootloader.o.tmp
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
@@ -118,7 +118,7 @@ endif
 
 # Clean Targets
 .clean-conf:
-	${RM} -r build/pic32-USB-starter-kit
+	${RM} -r build/microchip-pic32-explorer-16-360f512l
 	${RM} -r dist
 # Enable dependency checking
 .dep.inc: .depcheck-impl

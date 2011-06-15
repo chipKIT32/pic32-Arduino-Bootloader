@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=arduino-booloader.X
 
 # Active Configuration
-DEFAULTCONF=uno
+DEFAULTCONF=uno-64k
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=uno uno-128k mega pic32-starter-kit pic32-Ethernet-starter-kit pic32-USB-starter-kit 
+ALLCONFS=uno-64k uno-128k mega microchip-pic32-starter-kit microchip-pic32-Ethernet-starter-kit microchip-pic32-USB-starter-kit microchip-pic32-explorer-16-360f512l Digilent-Cerebot-32MX4 mikroe-MultiMediaBoard 
 
 
 # build

@@ -230,39 +230,55 @@
 //*	Microchip pic32 chip names
 #elif defined(__PIC32MX__)
 
+	
+
+	#define	E2END		0x0fff	//*	4 k of simulated EEPROM
+	
 	//************************************************************************
 	//*	300 series
 	#if defined(__32MX320F064H__)
 		#define	_CPU_NAME_	"32MX320F064H"
-		#define	FLASHEND	(64 * 1024L)
-		#define	RAMEND		(16 * 1024L)
+		#define	FLASHEND	(((64 - 4) * 1024L) - 1)
+		#define	RAMEND		((16 * 1024L) - 1)
 
 	#elif defined(__32MX320F128H__)
 		#define	_CPU_NAME_	"32MX320F128H"
-		#define	FLASHEND	(128 * 1024L)
-		#define	RAMEND		(16 * 1024L)
+		#define	FLASHEND	(((128 - 4) * 1024L) - 1)
+		#define	RAMEND		((16 * 1024L) - 1)
 
 	#elif defined(__32MX360F512L__)
 		#define	_CPU_NAME_	"32MX360F512L"
+		#define	FLASHEND	(((512 - 4) * 1024L) - 1)
+		#define	RAMEND		((16 * 1024L) - 1)
+
+	//************************************************************************
+	//*	400 series
+	#elif defined(__32MX460F512L__)
+		#define	_CPU_NAME_	"32MX460F512L"
 		#define	FLASHEND	(512 * 1024L)
 		#define	RAMEND		(16 * 1024L)
+
 
 	//************************************************************************
 	//*	700 series
 	#elif defined(__32MX795F512H__)
 		#define	_CPU_NAME_	"32MX795F512H"
-		#define	FLASHEND	(512 * 1024L)
-		#define	RAMEND		(128 * 1024L)
+		#define	FLASHEND	(((512 - 4) * 1024L) - 1)
+		#define	RAMEND		((128 * 1024L) - 1)
 
 	#elif defined(__32MX795F512L__)
 		#define	_CPU_NAME_	"32MX795F512L"
-		#define	FLASHEND	(512 * 1024L)
-		#define	RAMEND		(128 * 1024L)
+		#define	FLASHEND	(((512 - 4) * 1024L) - 1)
+		#define	RAMEND		((128 * 1024L) - 1)
 
 	#else
 		#warning CPU type is unknown, cpudefs.h needs to have additions
 	#endif
 
+#elif defined(__arm__)
+		#define	_CPU_NAME_	"ARM"
+		#define	FLASHEND	(((512 - 4) * 1024L) - 1)
+		#define	RAMEND		((128 * 1024L) - 1)
 
 #else
 	#error unknown cpu architecture

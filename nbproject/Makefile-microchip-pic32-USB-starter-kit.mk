@@ -15,7 +15,7 @@ MKDIR=mkdir -p
 RM=rm -f 
 CP=cp 
 # Macros
-CND_CONF=uno
+CND_CONF=microchip-pic32-USB-starter-kit
 
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
@@ -57,7 +57,7 @@ MP_AR_DIR=/Applications/microchip/mplabc32/v1.11a/bin
 ifneq ($(OS_CURRENT),$(OS_ORIGINAL))
 	@echo "***** WARNING: This make file contains OS dependent code. The OS this makefile is being run is different from the OS it was created in."
 endif
-	${MAKE}  -f nbproject/Makefile-uno.mk dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf
+	${MAKE}  -f nbproject/Makefile-microchip-pic32-USB-starter-kit.mk dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
@@ -65,12 +65,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 .PHONY: ${OBJECTDIR}/startup.o
 ${OBJECTDIR}/startup.o: startup.S  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} ${OBJECTDIR} 
-	${MP_CC}  -D__DEBUG  -D__MPLAB_DEBUGGER_ICD3=1 -c -mprocessor=32MX320F064H  -o ${OBJECTDIR}/startup.o startup.S  -Wa,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__ICD2RAM=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_ICD3=1,--gdwarf-2
+	${MP_CC}  -D__DEBUG  -D__MPLAB_DEBUGGER_ICD3=1 -c -mprocessor=32MX360F512L  -o ${OBJECTDIR}/startup.o startup.S  -Wa,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__ICD2RAM=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_ICD3=1,--gdwarf-2
 else
 .PHONY: ${OBJECTDIR}/startup.o
 ${OBJECTDIR}/startup.o: startup.S  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} ${OBJECTDIR} 
-	${MP_CC}  -c -mprocessor=32MX320F064H  -o ${OBJECTDIR}/startup.o startup.S  -Wa,--defsym=__MPLAB_BUILD=1
+	${MP_CC}  -c -mprocessor=32MX360F512L  -o ${OBJECTDIR}/startup.o startup.S  -Wa,--defsym=__MPLAB_BUILD=1
 endif
 
 # ------------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 ${OBJECTDIR}/pic32bootloader.o: pic32bootloader.c  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} ${OBJECTDIR} 
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
-	${MP_CC} -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -x c -c -mprocessor=32MX320F064H -ffunction-sections -fdata-sections -mips16 -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
+	${MP_CC} -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -x c -c -mprocessor=32MX360F512L -ffunction-sections -fdata-sections -mips16 -D_BOARD_CEREBOT_32MX4_ -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
 ifneq (,$(findstring MINGW32,$(OS_CURRENT))) 
 	 sed -e 's/\\$$/__EOL__/g' -e 's/\\ /__ESCAPED_SPACES__/g' -e 's/\\/\//g' -e 's/__ESCAPED_SPACES__/\\ /g' -e 's/__EOL__$$/\\/g' ${OBJECTDIR}/pic32bootloader.o.d > ${OBJECTDIR}/pic32bootloader.o.tmp
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
@@ -90,7 +90,7 @@ else
 ${OBJECTDIR}/pic32bootloader.o: pic32bootloader.c  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} ${OBJECTDIR} 
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
-	${MP_CC}  -x c -c -mprocessor=32MX320F064H -ffunction-sections -fdata-sections -mips16 -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
+	${MP_CC}  -x c -c -mprocessor=32MX360F512L -ffunction-sections -fdata-sections -mips16 -D_BOARD_CEREBOT_32MX4_ -Os -MMD -MF ${OBJECTDIR}/pic32bootloader.o.d -o ${OBJECTDIR}/pic32bootloader.o pic32bootloader.c 
 ifneq (,$(findstring MINGW32,$(OS_CURRENT))) 
 	 sed -e 's/\\$$/__EOL__/g' -e 's/\\ /__ESCAPED_SPACES__/g' -e 's/\\/\//g' -e 's/__ESCAPED_SPACES__/\\ /g' -e 's/__EOL__$$/\\/g' ${OBJECTDIR}/pic32bootloader.o.d > ${OBJECTDIR}/pic32bootloader.o.tmp
 	${RM} ${OBJECTDIR}/pic32bootloader.o.d 
@@ -104,11 +104,11 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC}  -mdebugger -D__MPLAB_DEBUGGER_ICD3=1 -mprocessor=32MX320F064H -nostartfiles -o dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf ${OBJECTFILES}      -Wl,--defsym=__MPLAB_BUILD=1,--script=boot-linkerscript.ld,--defsym=__MPLAB_DEBUG=1,--defsym=__ICD2RAM=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_ICD3=1,--gc-sections,-Map="map.txt",--cref,-Os
+	${MP_CC}  -mdebugger -D__MPLAB_DEBUGGER_ICD3=1 -mprocessor=32MX360F512L -nostartfiles -o dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf ${OBJECTFILES}      -Wl,--defsym=__MPLAB_BUILD=1,--script=boot-linkerscript.ld,--defsym=__MPLAB_DEBUG=1,--defsym=__ICD2RAM=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_ICD3=1,--gc-sections,-Map="map.txt",--cref,-Os
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC}  -mprocessor=32MX320F064H -nostartfiles -o dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf ${OBJECTFILES}      -Wl,--defsym=__MPLAB_BUILD=1,--script=boot-linkerscript.ld,--gc-sections,-Map="map.txt",--cref,-Os
+	${MP_CC}  -mprocessor=32MX360F512L -nostartfiles -o dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf ${OBJECTFILES}      -Wl,--defsym=__MPLAB_BUILD=1,--script=boot-linkerscript.ld,--gc-sections,-Map="map.txt",--cref,-Os
 	${MP_CC_DIR}/pic32-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/arduino-booloader.X.${IMAGE_TYPE}.elf 
 endif
 
@@ -118,7 +118,7 @@ endif
 
 # Clean Targets
 .clean-conf:
-	${RM} -r build/uno
+	${RM} -r build/microchip-pic32-USB-starter-kit
 	${RM} -r dist
 # Enable dependency checking
 .dep.inc: .depcheck-impl

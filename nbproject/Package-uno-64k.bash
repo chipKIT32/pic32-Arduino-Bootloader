@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_CONF=pic32-Ethernet-starter-kit
+CND_CONF=uno-64k
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging

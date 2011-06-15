@@ -38,34 +38,115 @@
 //*	Apr 24,	2011	<MLS> Added Version number, Version 1.0
 //*	Apr 24,	2011	<MLS> Added chip erase, only erases blocks that have non-0xff data
 //*	Apr 24,	2011	<MLS> Released version 1.0 to Digilent
+//*	May 26,	2011	<MLS> Added options for various Microchip Starter kits
+//*	Jun  7,	2011	<MLS> Added support for Digilent Cerebot board
+//*	Jun 14,	2011	<MLS> Added support for MikroElectronica boards (http://www.mikroe.com/)
+//*	Jun 15,	2011	<MLS> Added support for Explorer16, it uses Uart2, the DB9 connector
+//*	Jun 15,	2011	<MLS> Added 2nd LED to indicate in process of downloading
+//*	Jun 15,	2011	<MLS> Version 1.1
 //************************************************************************
 
 #define	_VERSION_MAJOR_		1
-#define	_VERSION_MINOR_		0
-#define	_VERSION_STRING_	"V1.0"
+#define	_VERSION_MINOR_		1
+#define	_VERSION_STRING_	"V1.1"
 
 #define _USE_RELEASE_OPTIONS_
 
 //************************************************************************
-#if defined(__32MX320F064H__) || defined(__32MX320F128H__)
-	#define	_BOARD_DIGILENT_UNO_
-	#define _USE_RELEASE_OPTIONS_
+//*	NOTE!!!!!
+//*		Some of these #defines are defined in the MPLAB-X option configurations
+//*			Project Properties
+//*				pic32-gcc
+//*					Preprossor macros
+//************************************************************************
 
-//	#define	_DEBUG_SERIAL_
+//*	the board definitions are set in MPLAB-X properties -> pic32-gcc -> Preprocessor macros
+
+//************************************************************************
+#if defined(_BOARD_DIGILENT_UNO_)
+
+	//*	portG bit 6
+ 	#define	_LED_ON_PORT_G
+ 	#define	_LED_BIT_	BIT_6
+
+	#define	_BOARD_HAS_2ND_LED_
+ 	#define	_LED2_ON_PORT_F
+ 	#define	_LED2_BIT_	BIT_0
+
+
+//************************************************************************
+#elif defined(_BOARD_DIGILENT_MEGA_)
+
+	//*	portA bit 3
+ 	#define	_LED_ON_PORT_A
+ 	#define	_LED_BIT_	BIT_3
+
+//************************************************************************
+#elif defined(_BOARD_PIC32_STARTER_KIT_) && defined(__32MX360F512L__)
+
+	//*	portD bit 1
+ 	#define	_LED_ON_PORT_D
+ 	#define	_LED_BIT_	BIT_1
+
+	#define	_BOARD_HAS_2ND_LED_
+ 	#define	_LED2_ON_PORT_D
+ 	#define	_LED2_BIT_	BIT_2
+
+//************************************************************************
+#elif defined(_BOARD_ETHERNET_STARTER_KIT_) && defined(__32MX795F512L__)
+
+	//*	portD bit 1
+ 	#define	_LED_ON_PORT_D
+ 	#define	_LED_BIT_	BIT_1
+
+//************************************************************************
+#elif defined(_BOARD_PIC32_EXPLORER16_)
+
+	#warning EXPLORER16 uses UART2 for bootloader
+	
+	#define	_USE_UART2_FOR_BOOTLOADER_
+	
+ 	#define	_LED_ON_PORT_A
+ 	#define	_LED_BIT_	BIT_2
+
+	#define	_BOARD_HAS_2ND_LED_
+ 	#define	_LED2_ON_PORT_A
+ 	#define	_LED2_BIT_	BIT_3
+
+
+//************************************************************************
+#elif defined(_BOARD_CEREBOT_32MX4_)
+ 
+ 	#define	_LED_ON_PORT_B
+ 	#define	_LED_BIT_	BIT_10
+
+//************************************************************************
+#elif defined(_BOARD_MIKROE_MULTIMEDIA_)
+ 
+ 	#define	_LED_ON_PORT_A
+ 	#define	_LED_BIT_	BIT_3
+
+	#define	_BOARD_HAS_2ND_LED_
+ 	#define	_LED2_ON_PORT_A
+ 	#define	_LED2_BIT_	BIT_2
+
+	#define	_LEDS_INVERTED_
+	
+	#define _USE_WORD_WRITE_
+//************************************************************************
+#elif defined(__32MX320F064H__) || defined(__32MX320F128H__)
+	#define	_BOARD_DIGILENT_UNO_
+
 //************************************************************************
 #elif defined(__32MX795F512L__)
 	//*	mega board ready for release
 	#define	_BOARD_DIGILENT_MEGA_
-	#define _USE_RELEASE_OPTIONS_
 
 //************************************************************************
 #elif defined(__32MX360F512L__)
 	#define	_BOARD_PIC32_STARTER_KIT_
-	#define _USE_RELEASE_OPTIONS_
 #else
-//#define	_BOARD_EXPLORER16_
-//#define	_BOARD_PIC32_STARTER_KIT_
-//#define	_BOARD_CEREBOT_32MX4_
+	#error	Board/CPU combination not defined
 #endif
 
 
@@ -88,10 +169,14 @@
 
 
 	#ifdef DEBUG_VIA_SERIAL_AUX
-		//#define	USE_UART2
-		#define	USE_UART3A
+		//#define	_USE_UART2_FOR_DEBUG_
+		#define		_USE_UART3A_FOR_DEBUG_
 		#define BAUDRATE_SERIAL2 230400
 	#endif
+#endif
+
+#if defined(_USE_UART2_FOR_BOOTLOADER_) && defined(_USE_UART2_FOR_DEBUG_)
+	#error	Cannot use UART2 for bootloader AND DEBUG at the same time
 #endif
 
 #define		_ENABLE_HELP_MESSAGES_
@@ -143,7 +228,7 @@
 	#pragma config	ICESEL		=	ICS_PGx2	// ICE pin selection
 //	#pragma config	DEBUG		=	OFF			// Debug mode select
 
-#if defined(__32MX320F064H__) ||  defined(__32MX320F128H__) || defined(__32MX360F512L__)
+#if defined(__32MX320F064H__) ||  defined(__32MX320F128H__) || defined(__32MX360F512L__) || defined(__32MX460F512L__)
 	//************************************************************************
 	//*		PIC32MX3XX Configuration Settings
 	//************************************************************************
@@ -180,7 +265,7 @@
 	#pragma config	FUSBIDIO	=	OFF			// USBID pin control
 
 	//************************************************************************
-#elif
+#else
 	#warning CPU config bits not set for this CPU
 #endif
 
@@ -236,7 +321,6 @@
 	#define F_CPU 80000000UL
 #endif
 
-//#define	_BLINK_LOOP_COUNT_	(F_CPU / 2250)
 #define	_BLINK_LOOP_COUNT_	(F_CPU / 5000)
 /*
  * UART Baudrate, AVRStudio AVRISP only accepts 115200 bps
@@ -244,8 +328,6 @@
 
 #ifndef BAUDRATE
 	#define BAUDRATE 115200
-//	#define BAUDRATE 38400
-//	#define BAUDRATE 4800
 #endif
 
 
@@ -274,6 +356,7 @@ static	void	delay_ms(unsigned long ms);
 static	void	BootLED_Toggle();
 static	void	PrintDecInt(int theNumber, int digitCnt);
 static	void	JumpToApp();
+static void 	DownloadLED_Off();
 
 
 //?#define BL_CSUM_ADDR 		0x9D0017F4
@@ -309,14 +392,16 @@ unsigned long			__PIC32_pbClk;
 #define	ST_PROCESS		7
 
 
-//#define	SPH_REG	0x3E
-//#define	SPL_REG	0x3D
 
 
 //************************************************************************
 static int 	Serial_Available(void)
 {
+#ifdef _USE_UART2_FOR_BOOTLOADER_
+	return(U2STA & 1);	// is there any data
+#else
 	return(U1STA & 1);	// is there any data
+#endif
 }
 
 
@@ -325,19 +410,19 @@ static int 	Serial_Available(void)
 //*****************************************************************************
 static unsigned char  Serial_read(void)
 {
-//	if((U1STA & 0x000E) != 0)
-//	{
-//	BYTE	dummy;
-//
-//		dummy			=	U1RXREG; 	//dummy read to clear FERR/PERR
-//		U1STAbits.OERR	=	0;			//clear OERR to keep receiving
-//	}
-
+#ifdef _USE_UART2_FOR_BOOTLOADER_
+	while (!(U2STA & 1))
+	{
+		// wait for data
+	}
+	return (U2RXREG);
+#else
 	while (!(U1STA & 1))
 	{
 		// wait for data
 	}
 	return (U1RXREG);
+#endif
 }
 
 #define	MAX_TIME_COUNT	(F_CPU >> 1)
@@ -346,6 +431,27 @@ static unsigned char  Serial_read_timeout(void)
 {
 uint32_t count = 0;
 
+#ifdef _USE_UART2_FOR_BOOTLOADER_
+	if((U2STA & 0x000E) != 0)
+	{
+	BYTE	dummy;
+
+		dummy			=	U2RXREG; 	//dummy read to clear FERR/PERR
+		U2STAbits.OERR	=	0;			//clear OERR to keep receiving
+	}
+
+	while (!(U2STA & 1))
+	{
+		// wait for data
+		count++;
+		if (count > MAX_TIME_COUNT)
+		{
+			//*	jump to user program
+			JumpToApp();
+		}
+	}
+	return (U2RXREG);
+#else
 	if((U1STA & 0x000E) != 0)
 	{
 	BYTE	dummy;
@@ -365,6 +471,7 @@ uint32_t count = 0;
 		}
 	}
 	return (U1RXREG);
+#endif
 }
 
 //*****************************************************************************
@@ -372,18 +479,26 @@ uint32_t count = 0;
 //*****************************************************************************
 static void   Serial_write(char theChar)
 {
+#ifdef _USE_UART2_FOR_BOOTLOADER_
+	while (! U2STAbits.TRMT)
+	{
+		//*	wait for the buffer to be clear
+	}
+	U2TXREG	=	theChar;
+#else
 	while (! U1STAbits.TRMT)
 	{
 		//*	wait for the buffer to be clear
 	}
 	U1TXREG	=	theChar;
+#endif
 }
 
 //************************************************************************
 static void 	Serial_print(const char *textString)
 {
-char	theChar;
-int		ii;
+char			theChar;
+unsigned int	ii;
 
 	theChar		=	1;
 	ii			=	0;
@@ -410,13 +525,13 @@ static void 	Serial_println(void)
 //*****************************************************************************
 static void  Serial2_begin(long buadRate)
 {
-#ifdef USE_UART2
+#ifdef _USE_UART2_FOR_DEBUG_
 	U2MODE				=	(UART_EN);
 	U2STA				=	(UART_RX_ENABLE | UART_TX_ENABLE);
 	U2BRG				=	(__PIC32_pbClk / 16 / (buadRate - 1));	// calculate actual BAUD generate value.
 	U2MODEbits.UARTEN	=	0x01;
 	U2STAbits.UTXEN		=	0x01;
-#elif defined USE_UART3A
+#elif defined _USE_UART3A_FOR_DEBUG_
 	U3AMODE				=	(UART_EN);
 	U3ASTA				=	(UART_RX_ENABLE | UART_TX_ENABLE);
 	U3ABRG				=	(__PIC32_pbClk / 16 / (buadRate - 1));	// calculate actual BAUD generate value.
@@ -428,13 +543,13 @@ static void  Serial2_begin(long buadRate)
 //*****************************************************************************
 static void  Serial2_write(char theChar)
 {
-#ifdef USE_UART2
+#ifdef _USE_UART2_FOR_DEBUG_
 	while (! U2STAbits.TRMT)
 	{
 		//*	wait for the buffer to be clear
 	}
 	U2TXREG	=	theChar;
-#elif defined USE_UART3A
+#elif defined _USE_UART3A_FOR_DEBUG_
 	while (! U3ASTAbits.TRMT)
 	{
 		//*	wait for the buffer to be clear
@@ -478,8 +593,8 @@ static void 	Serial2_PrintLongWordHex(uint32_t longWord)
 //*****************************************************************************
 static void  Serial2_print(char *textString)
 {
-char	theChar;
-int		ii;
+char			theChar;
+unsigned int	ii;
 
 	theChar		=	1;
 	ii			=	0;
@@ -511,13 +626,18 @@ static void  JumpToApp()
 void			(*fptr)(void);
 unsigned long	firstLongWord;
 
+#ifdef _BOARD_HAS_2ND_LED_
+	DownloadLED_Off();
+#endif
+
+
 #ifdef DEBUG_VIA_SERIAL_AUX
 	Serial2_print("JumpToApp");
 	Serial2_println();
 #endif
 
 #if defined(_DEBUG_WITH_LEDS_)
-int ii;
+unsigned int ii;
 
 	for (ii=0; ii<=12; ii++)
 	{
@@ -587,20 +707,55 @@ unsigned long	ii;
 //*****************************************************************************
 static void  	BootLED_Init()
 {
-#if defined(_BOARD_DIGILENT_UNO_)
-//#error foo1
+#if defined(_LED_ON_PORT_A) && defined(_LED_BIT_)
+	mPORTASetPinsDigitalOut(_LED_BIT_);
+	#ifdef _LEDS_INVERTED_
+		mPORTAClearBits(_LED_BIT_);				//*	set pins as output
+	#else
+		mPORTASetBits(_LED_BIT_);				//*	set pins as output
+	#endif
+#elif defined(_LED_ON_PORT_B) && defined(_LED_BIT_)
+	mPORTBClearBits(_LED_BIT_);				//*	set pins as output
+	mPORTBSetPinsDigitalOut(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_C) && defined(_LED_BIT_)
+	mPORTCClearBits(_LED_BIT_);				//*	set pins as output
+	mPORTCSetPinsDigitalOut(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_D) && defined(_LED_BIT_)
+	mPORTDClearBits(_LED_BIT_);				//*	set pins as output
+	mPORTDSetPinsDigitalOut(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_E) && defined(_LED_BIT_)
+	mPORTEClearBits(_LED_BIT_);				//*	set pins as output
+	mPORTESetPinsDigitalOut(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_F) && defined(_LED_BIT_)
+	mPORTFClearBits(_LED_BIT_);				//*	set pins as output
+	mPORTFSetPinsDigitalOut(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_G) && defined(_LED_BIT_)
+	mPORTGClearBits(_LED_BIT_);				//*	set pins as output
+	mPORTGSetPinsDigitalOut(_LED_BIT_);
+
+#elif defined(_BOARD_DIGILENT_UNO_)
 	//*	portG bit 6
-	mPORTGSetPinsDigitalOut(BIT_6);		//*	set pins as output
+	mPORTGSetPinsDigitalOut(BIT_6);			//*	set pins as output
 	mPORTGClearBits(BIT_6);
 #elif defined(_BOARD_DIGILENT_MEGA_)
 	//*	portA bit 3
 	mPORTAClearBits(BIT_3);
-	mPORTASetPinsDigitalOut(BIT_3);		//*	set pins as output
-#elif defined(_BOARD_PIC32_STARTER_KIT_)
+	mPORTASetPinsDigitalOut(BIT_3);			//*	set pins as output
+#elif defined(_BOARD_PIC32_STARTER_KIT_) || defined(_BOARD_ETHERNET_STARTER_KIT_)
 	//*	portD bit 1
 	mPORTDClearBits(BIT_1);
 	mPORTDSetPinsDigitalOut(BIT_1);
+#elif defined(_BOARD_CEREBOT_32MX4_)
+	//*	portB bit 10
+	mPORTBClearBits(BIT_10);
+	mPORTBSetPinsDigitalOut(BIT_10);
 #else
+	#warning board not defined
 	mPORTDClearBits(BIT_0 | BIT_1 | BIT_2);
 	mPORTDSetPinsDigitalOut(BIT_0 | BIT_1 | BIT_2);		//*	set pins as output
 #endif
@@ -609,14 +764,38 @@ static void  	BootLED_Init()
 //*****************************************************************************
 static void	 BootLED_Toggle()
 {
-#if defined(_BOARD_DIGILENT_UNO_)
+#if defined(_LED_ON_PORT_A) && defined(_LED_BIT_)
+	mPORTAToggleBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_B) && defined(_LED_BIT_)
+	mPORTBToggleBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_C) && defined(_LED_BIT_)
+	mPORTCToggleBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_D) && defined(_LED_BIT_)
+	mPORTDToggleBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_E) && defined(_LED_BIT_)
+	mPORTEToggleBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_F) && defined(_LED_BIT_)
+	mPORTFToggleBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_G) && defined(_LED_BIT_)
+	mPORTGToggleBits(_LED_BIT_);
+
+#elif defined(_BOARD_DIGILENT_UNO_)
 //#error foo2
 	mPORTGToggleBits(BIT_6);
 #elif defined(_BOARD_DIGILENT_MEGA_)
 	mPORTAToggleBits(BIT_3);
-#elif defined(_BOARD_PIC32_STARTER_KIT_)
+#elif defined(_BOARD_PIC32_STARTER_KIT_) || defined(_BOARD_ETHERNET_STARTER_KIT_)
 	//*	portD bit 1
 	mPORTDToggleBits(BIT_1);
+#elif defined(_BOARD_CEREBOT_32MX4_)
+	//*	portB bit 10
+	mPORTBToggleBits(BIT_10);
 #else
 	mPORTDToggleBits(BIT_0);
 #endif
@@ -625,18 +804,154 @@ static void	 BootLED_Toggle()
 //*****************************************************************************
 static void 	BootLED_Off()
 {
-#if defined(_BOARD_DIGILENT_UNO_)
+#if defined(_LED_ON_PORT_A) && defined(_LED_BIT_)
+	#ifdef _LEDS_INVERTED_
+		mPORTASetBits(_LED_BIT_);
+	#else
+		mPORTAClearBits(_LED_BIT_);
+	#endif
+	
+#elif defined(_LED_ON_PORT_B) && defined(_LED_BIT_)
+	mPORTBClearBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_C) && defined(_LED_BIT_)
+	mPORTCClearBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_D) && defined(_LED_BIT_)
+	mPORTDClearBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_E) && defined(_LED_BIT_)
+	mPORTEClearBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_F) && defined(_LED_BIT_)
+	mPORTFClearBits(_LED_BIT_);
+
+#elif defined(_LED_ON_PORT_G) && defined(_LED_BIT_)
+	mPORTGClearBits(_LED_BIT_);
+
+#elif defined(_BOARD_DIGILENT_UNO_)
 //#error foo3
 	mPORTGClearBits(BIT_6);
 #elif defined(_BOARD_DIGILENT_MEGA_)
 	mPORTAClearBits(BIT_3);
-#elif defined(_BOARD_PIC32_STARTER_KIT_)
+#elif defined(_BOARD_PIC32_STARTER_KIT_) || defined(_BOARD_ETHERNET_STARTER_KIT_)
 	//*	portD bit 1
 	mPORTDClearBits(BIT_1);
+#elif defined(_BOARD_CEREBOT_32MX4_)
+	//*	portB bit 10
+	mPORTBClearBits(BIT_10);
 #else
+	#warning board not defined
 	mPORTDClearBits(BIT_0 | BIT_1 | BIT_2);
 #endif
 }
+
+
+#ifdef _BOARD_HAS_2ND_LED_
+//*****************************************************************************
+static void  	DownloadLED_Init()
+{
+#if defined(_LED2_ON_PORT_A) && defined(_LED2_BIT_)
+	mPORTASetPinsDigitalOut(_LED2_BIT_);			//*	set pins as output
+
+	#ifdef _LEDS_INVERTED_
+		mPORTASetBits(_LED2_BIT_);					
+	#else
+		mPORTAClearBits(_LED2_BIT_);				
+	#endif
+
+#elif defined(_LED2_ON_PORT_B) && defined(_LED2_BIT_)
+	mPORTBClearBits(_LED2_BIT_);				
+	mPORTBSetPinsDigitalOut(_LED2_BIT_);		//*	set pins as output
+
+#elif defined(_LED2_ON_PORT_C) && defined(_LED2_BIT_)
+	mPORTCClearBits(_LED2_BIT_);				
+	mPORTCSetPinsDigitalOut(_LED2_BIT_);		//*	set pins as output
+
+#elif defined(_LED2_ON_PORT_D) && defined(_LED2_BIT_)
+	mPORTDClearBits(_LED2_BIT_);				
+	mPORTDSetPinsDigitalOut(_LED2_BIT_);		//*	set pins as output
+
+#elif defined(_LED2_ON_PORT_E) && defined(_LED2_BIT_)
+	mPORTEClearBits(_LED2_BIT_);				
+	mPORTESetPinsDigitalOut(_LED2_BIT_);		//*	set pins as output
+
+#elif defined(_LED2_ON_PORT_F) && defined(_LED2_BIT_)
+	mPORTFClearBits(_LED2_BIT_);				
+	mPORTFSetPinsDigitalOut(_LED2_BIT_);		//*	set pins as output
+
+#elif defined(_LED2_ON_PORT_G) && defined(_LED2_BIT_)
+	mPORTGClearBits(_LED2_BIT_);				
+	mPORTGSetPinsDigitalOut(_LED2_BIT_);		//*	set pins as output
+
+#endif
+}
+
+//*****************************************************************************
+static void 	DownloadLED_On()
+{
+#if defined(_LED2_ON_PORT_A) && defined(_LED2_BIT_)
+	#ifdef _LEDS_INVERTED_
+		mPORTAClearBits(_LED2_BIT_);
+	#else
+		mPORTASetBits(_LED2_BIT_);
+	#endif
+
+#elif defined(_LED2_ON_PORT_B) && defined(_LED2_BIT_)
+	mPORTBSetBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_C) && defined(_LED2_BIT_)
+	mPORTCSetBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_D) && defined(_LED2_BIT_)
+	mPORTDSetBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_E) && defined(_LED2_BIT_)
+	mPORTESetBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_F) && defined(_LED2_BIT_)
+	mPORTFSetBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_G) && defined(_LED2_BIT_)
+	mPORTGSetBits(_LED2_BIT_);
+
+#endif
+}
+
+
+//*****************************************************************************
+static void 	DownloadLED_Off()
+{
+#if defined(_LED2_ON_PORT_A) && defined(_LED2_BIT_)
+	#ifdef _LEDS_INVERTED_
+		mPORTASetBits(_LED2_BIT_);
+	#else
+		mPORTAClearBits(_LED2_BIT_);
+	#endif
+
+#elif defined(_LED2_ON_PORT_B) && defined(_LED2_BIT_)
+	mPORTBClearBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_C) && defined(_LED2_BIT_)
+	mPORTCClearBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_D) && defined(_LED2_BIT_)
+	mPORTDClearBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_E) && defined(_LED2_BIT_)
+	mPORTEClearBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_F) && defined(_LED2_BIT_)
+	mPORTFClearBits(_LED2_BIT_);
+
+#elif defined(_LED2_ON_PORT_G) && defined(_LED2_BIT_)
+	mPORTGClearBits(_LED2_BIT_);
+
+#endif
+}
+
+
+#endif
 
 #pragma mark -
 
@@ -649,14 +964,13 @@ char			gPageBuffer[1024];
 //*****************************************************************************
 static void InitFlashBuffer(void)
 {
-int	ii;
+unsigned int	ii;
 
 	for (ii=0; ii<kFlashBufferSize; ii++)
 	{
 		gFlashDataBuffer[ii]	=	0xFF;
 	}
 }
-
 
 
 //*****************************************************************************
@@ -669,6 +983,23 @@ unsigned int	returnCode;
 	actualFlashAddress	=	(void *)FLASH_PROG_BASE;
 	actualFlashAddress	+=	address;
 	
+#ifdef _USE_WORD_WRITE_
+	unsigned int ii;
+	for (ii=0; ii<256; ii+=4)
+	{
+	unsigned long	theLongWord;
+	
+		theLongWord	=	(gFlashDataBuffer[ii + 3] & 0x0ff) << 24;
+		theLongWord	+=	(gFlashDataBuffer[ii + 2] & 0x0ff) << 16;
+		theLongWord	+=	(gFlashDataBuffer[ii + 1] & 0x0ff) << 8;
+		theLongWord	+=	(gFlashDataBuffer[ii + 0] & 0x0ff);
+	
+		NVMWriteWord(actualFlashAddress, theLongWord);
+
+		
+		actualFlashAddress	+=	4;
+	}
+#else
 	// Write 128 words 
 //	NVMWriteRow((void*)actualFlashAddress, (void *)gFlashDataBuffer);
 //unsigned int NVMProgram(void * address, const void * data, unsigned int size, void* pagebuff);
@@ -676,6 +1007,7 @@ unsigned int	returnCode;
 								(void *)gFlashDataBuffer,		//	Location of data to write.
 								256,							//	Number of bytes to write.
 								(void *)gPageBuffer);
+#endif
 
 #ifdef DEBUG_VIA_SERIAL_AUX
 	Serial2_println();
@@ -710,7 +1042,7 @@ static void boot_chip_erase(void)
 {
 unsigned char	*actualFlashAddress;
 unsigned int	returnCode;
-int				ii;
+unsigned int	ii;
 unsigned char	erasePage;
 
 #ifdef DEBUG_VIA_SERIAL_AUX
@@ -816,10 +1148,10 @@ unsigned char	chipNeedsToBeErased;
 	unsigned int	exPointCntr	=	0;
 #endif
 #ifdef DEBUG_VIA_SERIAL_AUX
-	char	asciiBuff[32];
-	int		asciiIdx;
-	int		clmCounter;
-	int		jj;
+	char			asciiBuff[32];
+	int				asciiIdx;
+	int				clmCounter;
+	unsigned int	jj;
 #endif
 
 	__PIC32_pbClk		=	SYSTEMConfigPerformance(F_CPU);
@@ -832,12 +1164,13 @@ unsigned char	chipNeedsToBeErased;
 	OpenCoreTimer(CORE_TICK_RATE);
 
 	BootLED_Init();
+#ifdef _BOARD_HAS_2ND_LED_
+	DownloadLED_Init();
+#endif
 
 #ifdef _DEBUG_WITH_LEDS_
 	for (ii=0; ii<=12; ii++)
-	{
-	long	kk;
-	
+	{	
 		BootLED_Toggle();
 		delay_ms(75);
 	}
@@ -851,21 +1184,29 @@ unsigned char	chipNeedsToBeErased;
 #else
 	//*	longer timeout for boards without auto reset
 	boot_timeout	=	10 * 100000;		//*	should be about 10 seconds
-	#error foo
 #endif
 
 
 	//*
 	//*	Init UART
 	//*	set baudrate and enable USART receiver and transmiter without interrupts
-	U1MODE				=	(UART_EN);
-	U1STA				=	(UART_RX_ENABLE | UART_TX_ENABLE);
-	U1BRG				=	(__PIC32_pbClk / 16 / (BAUDRATE - 1));	// calculate actual BAUD generate value.
-	U1MODEbits.UARTEN	=	0x01;
-	U1STAbits.UTXEN		=	0x01;
+	#ifdef _USE_UART2_FOR_BOOTLOADER_
+		U2MODE				=	(UART_EN);
+		U2STA				=	(UART_RX_ENABLE | UART_TX_ENABLE);
+		U2BRG				=	(__PIC32_pbClk / 16 / (BAUDRATE - 1));	// calculate actual BAUD generate value.
+		U2MODEbits.UARTEN	=	0x01;
+		U2STAbits.UTXEN		=	0x01;
 
-	mU1ClearAllIntFlags();
+		mU2ClearAllIntFlags();
+	#else
+		U1MODE				=	(UART_EN);
+		U1STA				=	(UART_RX_ENABLE | UART_TX_ENABLE);
+		U1BRG				=	(__PIC32_pbClk / 16 / (BAUDRATE - 1));	// calculate actual BAUD generate value.
+		U1MODEbits.UARTEN	=	0x01;
+		U1STAbits.UTXEN		=	0x01;
 
+		mU1ClearAllIntFlags();
+	#endif
 
 #ifdef DEBUG_VIA_SERIAL_AUX
 	//*
@@ -951,7 +1292,6 @@ unsigned char	chipNeedsToBeErased;
 			}
 			boot_state++; // ( if boot_state=1 bootloader received byte from UART, enter bootloader mode)
 		}
-		mPORTDClearBits(BIT_0);
 
 	#ifdef DEBUG_VIA_SERIAL_AUX
 		Serial2_println();
@@ -1008,6 +1348,9 @@ unsigned char	chipNeedsToBeErased;
 					switch (msgParseState)
 					{
 						case ST_START:
+						#ifdef _BOARD_HAS_2ND_LED_
+							DownloadLED_On();
+						#endif
 							if ( theChar == MESSAGE_START )
 							{
 								msgParseState	=	ST_GET_SEQ_NUM;
@@ -1489,12 +1832,9 @@ unsigned char	chipNeedsToBeErased;
 							if (msgBuffer[0] == CMD_READ_FLASH_ISP )
 							{
 
-								mPORTDToggleBits(BIT_2);
-
 								// Read FLASH
 								do
 								{
-									mPORTDToggleBits(BIT_1);
 								
 									data		=	pgm_read_word_far(address);
 									*dataPtr++	=	(unsigned char)data;		//LSB
@@ -1524,10 +1864,10 @@ unsigned char	chipNeedsToBeErased;
 								/* Read EEPROM */
 								do
 								{
-	//+								EEARL	=	address;			// Setup EEPROM address
-	//+								EEARH	=	((address >> 8));
+	//+								EEARL		=	address;			// Setup EEPROM address
+	//+								EEARH		=	((address >> 8));
 									address++;					// Select next EEPROM byte
-	//+								EECR	|=	(1<<EERE);			// Read EEPROM
+	//+								EECR		|=	(1<<EERE);			// Read EEPROM
 	//+								*dataPtr++	=	EEDR;				// Send EEPROM data
 									size--;
 								} while (size);
@@ -1592,14 +1932,6 @@ unsigned char	chipNeedsToBeErased;
 		Serial_write(0x0d);
 		Serial_write(0x0a);
 		delay_ms(100);
-	#endif
-
-
-	#ifndef REMOVE_BOOTLOADER_LED
-	//+	turn off LED
-	//+	delay_ms(100);					// delay after exit
-
-	//	asm volatile ("nop");			// wait until port has changed
 	#endif
 
 
@@ -2117,7 +2449,11 @@ static void	 RunMonitor(void)
 {
 char			keepGoing;
 unsigned char	theChar;
-int				ii, jj;
+unsigned int	ii, jj;
+
+#ifdef _BOARD_HAS_2ND_LED_
+	DownloadLED_Off();
+#endif
 
 	for (ii=0; ii<5; ii++)
 	{
